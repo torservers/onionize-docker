@@ -19,4 +19,13 @@ if [ "$socketMissing" = 1 -a "$1" = '/usr/bin/supervisord' -a "$2" = '-c' -a "$3
 	exit 1
 fi
 
+# Set permissions
+mkdir -p /var/lib/tor/hidden_services && \
+    chown -R debian-tor:debian-tor /var/lib/tor && \
+    chmod -R u=rw,u+X,go= /var/lib/tor
+
+touch /etc/torrc && \
+    chown debian-tor:debian-tor /etc/torrc && \
+    chmod 0600 /etc/torrc
+
 exec "$@"

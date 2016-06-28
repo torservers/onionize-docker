@@ -28,15 +28,6 @@ RUN wget https://github.com/jwilder/docker-gen/releases/download/$DOCKER_GEN_VER
 
 ADD files/docker-gen/torrc.tmpl /app/torrc.tmpl
 
-# Setup tor
-RUN mkdir -p /var/lib/tor/hidden_services && \
-    chown -R debian-tor:debian-tor /var/lib/tor && \
-    chmod -R u=rw,u+X,go= /var/lib/tor
-
-RUN touch /etc/torrc && \
-    chown debian-tor:debian-tor /etc/torrc && \
-    chmod 0600 /etc/torrc
-
 VOLUME ["/var/lib/tor/hidden_services"]
 
 WORKDIR /app
