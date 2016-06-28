@@ -12,7 +12,7 @@ To try it (assuming you have Docker installed on your Linux box; I haven't tried
 
 This will download the Onionboat image and create a running container instance from it called `onionboat`. Now you'll want to create an isolated network that doesn't have access to the internet for your services to reside in:
 
-`docker create network -o "com.docker.network.bridge.enable_ip_masquerade=false" faraday`
+`docker network create -o "com.docker.network.bridge.enable_ip_masquerade=false" faraday`
 
 This created a network called `faraday` that has IP masquerading disabled, meaning it won't be able to access the internet. Now attach `faraday` to the running `onionboat` container:
 
