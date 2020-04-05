@@ -1,0 +1,3 @@
+User tor
+SocksPort 0
+DataDirectory /var/lib/tor
