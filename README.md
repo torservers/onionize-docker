@@ -27,9 +27,9 @@ Alternatively, if you are making your containers already available via clearweb 
 
 	docker network connect nextcloud_default onionize
 
-The environment variable `ONIONSERVICE_NAME` is read by `docker-gen` running in the `onionize` container, which according to its template identifies it as something that should be added to the list of hidden services in `torrc`. It automatically uses whichever port is exposed by the container by default; if there's more than one, it uses port 80 by default but that behavior can be overridden by specifying a `ONIONSERVICE_PORT` environment variable as well. Containers specifying the same `ONIONSERVICE_NAME` are added to the same service. In this way, you can have multiple different containers providing services on different ports of the same .onion address. To see if it worked and to find out what .onion address was assigned, you can execute the following command:
+The environment variable `ONIONSERVICE_NAME` is read by `docker-gen` running in the `onionize` container, which according to its template identifies it as something that should be added to the list of onion services in `torrc`. It automatically uses whichever port is exposed by the container by default; if there's more than one, it uses port 80 by default but that behavior can be overridden by specifying a `ONIONSERVICE_PORT` environment variable as well. Containers specifying the same `ONIONSERVICE_NAME` are added to the same service. In this way, you can have multiple different containers providing services on different ports of the same .onion address. To see if it worked and to find out what .onion address was assigned, you can execute the following command:
 
-	docker exec onionize cat /var/lib/tor/hidden_services/<ONIONSERVICE_NAME>/hostname
+	docker exec onionize cat /var/lib/tor/onion_services/<ONIONSERVICE_NAME>/hostname
 
 Where `<ONIONSERVICE_NAME>` is replaced with the name you provided in the environment variable. This should print out a long hash followed by .onion, for instance:
 
@@ -41,6 +41,10 @@ Awesome!
 
 If you use the "faraday" method outlined above, the nginx container can't access the internet, so it's much harder for it to leak network data! One caveat for this method is that it will only work for services that do not need to connect out to the internet, in an anonymized fashion or otherwise. If you're running a service that needs access to the internet, you'll need to either configure your service so that it proxies its connection over Tor, or you can look into some experimental work on [a custom Tor network driver for Docker](https://github.com/jfrazelle/onion).
 
+## Useful to debug
+
+	docker logs onionize
+	docker exec onionize cat /etc/torrc 
 # Credits
 
 This work is largely based on [jheretic's onionboat](https://github.com/jheretic/onionboat).
