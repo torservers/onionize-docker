@@ -1,4 +1,4 @@
-# Onionize
+# Onionize: Tor v3 onion services (hidden services) for Docker containers 
 
 A docker wrapper for [Tor](https://torproject.org) v3 onion services (hidden services). It uses [docker-gen](https://github.com/jwilder/docker-gen) to configure Tor automatically when other containers are connected to the same network. The advantage of this approach is that it allows for optional network isolation and doesn't require building any containers yourself.
 
@@ -47,7 +47,7 @@ If you use the "faraday" method outlined above, the nginx container can't access
 	docker exec onionize cat /etc/torrc 
 # Credits
 
-This work is largely based on [jheretic's onionboat](https://github.com/jheretic/onionboat).
+This work (including the README) is largely based on [jheretic's onionboat](https://github.com/jheretic/onionboat). Thanks!
 
 Changes:
 
