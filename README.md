@@ -51,6 +51,11 @@ If you use the "faraday" method outlined above, the nginx container can't access
 	docker logs onionize
 	docker exec onionize cat /etc/torrc 
 
+## Changelog
+
+* **v0.3**: use container names instead of trying to discover IPs [#3](https://github.com/torservers/onionize-docker/issues/3) - thanks @langfingaz
+* **v0.2**: multiarch support (build docker-gen manually) [#1](https://github.com/torservers/onionize-docker/issues/1) - thanks @rriclet
+
 # Credits
 
 This work (including the README) is largely based on [jheretic's onionboat](https://github.com/jheretic/onionboat). Thanks!
