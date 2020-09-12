@@ -1,8 +1,6 @@
 # build docker-gen intermediate container
 FROM golang:alpine AS build-docker-gen
 
-ARG DOCKER_GEN_VERSION=0.7.4
-
 LABEL stage=intermediate
 
 ## Install build dependencies for docker-gen
@@ -16,7 +14,8 @@ RUN apk add --update \
 ## Build docker-gen
 RUN go get github.com/jwilder/docker-gen \
     && cd /go/src/github.com/jwilder/docker-gen \
-    && git -c advice.detachedHead=false checkout $DOCKER_GEN_VERSION \
+    && git fetch --tags \
+    && git -c advice.detachedHead=false checkout $(git describe --tags $(git rev-list --tags --max-count=1)) \
     && make get-deps \
     && make all
 
