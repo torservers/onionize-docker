@@ -12,13 +12,12 @@ HiddenServiceVersion 3
 {{ range $index, $value := $containers }}
 
 	{{ $addrLen := len $value.Addresses }}
-	{{ $network := index $value.Networks 0 }}
 	
 	{{/* If only 1 port exposed, use that */}}
 	{{ if eq $addrLen 1 }}
 		{{ with $address := index $value.Addresses 0 }}
 # auto: single port exposed
-HiddenServicePort {{ $address.Port }} {{ $network.IP }}:{{ $address.Port }}
+HiddenServicePort {{ $address.Port }} {{ $value.Name }}:{{ $address.Port }}
 		{{ end }}
 
 	{{/* If more than one port exposed, use the one matching VIRTUAL_PORT env var */}}
@@ -26,7 +25,7 @@ HiddenServicePort {{ $address.Port }} {{ $network.IP }}:{{ $address.Port }}
 		{{ range $i, $address := $value.Addresses }}
 			{{ if eq $address.Port $value.Env.ONIONSERVICE_PORT }}
 # port specified by ONIONSERVICE_PORT
-HiddenServicePort {{ $address.Port }} {{ $network.IP }}:{{ $address.Port }}
+HiddenServicePort {{ $address.Port }} {{ $value.Name }}:{{ $address.Port }}
 			{{ end }}
 		{{ end }}
 
@@ -35,7 +34,7 @@ HiddenServicePort {{ $address.Port }} {{ $network.IP }}:{{ $address.Port }}
 		{{ range $i, $address := $value.Addresses }}
 			{{ if eq $address.Port "80" }}
 # auto: standard port 80
-HiddenServicePort {{ $address.Port }} {{ $network.IP }}:{{ $address.Port }}
+HiddenServicePort {{ $address.Port }} {{ $value.Name }}:{{ $address.Port }}
 			{{ end }}
 		{{ end }}
 	{{ end }}
